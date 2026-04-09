@@ -49,7 +49,7 @@ Abrir en navegador:
 
 http://127.0.0.1:8000
 
-Autor
+
 Desarrollado por Valentina Quiroz
 
 Este proyecto fue desarrollado como práctica para fortalecer conocimientos en Laravel, incluyendo autenticación, relaciones en base de datos y desarrollo de aplicaciones web completas.
