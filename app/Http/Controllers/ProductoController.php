@@ -7,22 +7,36 @@ use App\Models\Producto;
 
 class ProductoController extends Controller
 {
-    public function index()
-    {
-        $productos = Producto::all();
-        return view('productos', compact('productos'));
-    }
+  public function index(Request $request)
+{
+    $buscar = $request->buscar;
+
+    $productos = Producto::where('user_id', auth()->id())
+        ->when($buscar, function ($query, $buscar) {
+            return $query->where('nombre', 'like', "%$buscar%");
+        })
+        ->get();
+
+    return view('lista_productos', compact('productos'));
+}
 
     public function create()
     {
         return view('crear_producto');
     }
 
-    public function store(Request $request)
-    {
-        Producto::create($request->all());
-        return redirect()->route('productos.index');
-    }
+public function store(Request $request)
+{
+   
+
+    Producto::create([
+        'nombre' => $request->nombre,
+        'precio' => $request->precio,
+        'user_id' => auth()->id()
+    ]);
+
+    return redirect()->route('productos.index');
+}
 
     public function edit($id)
     {

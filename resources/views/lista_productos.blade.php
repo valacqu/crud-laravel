@@ -60,9 +60,14 @@
 </style>
 <h1>Productos</h1>
 
-<a href="/formulario">
+<a href="{{ route('productos.create') }}">
     <button class="btn btn-agregar">+ Agregar Producto</button>
 </a>
+
+<form method="GET" action="{{ route('productos.index') }}" style="margin: 20px 0;">
+    <input type="text" name="buscar" placeholder="Buscar producto">
+    <button type="submit">Buscar</button>
+</form>
 
 <div class="container">
 
@@ -75,8 +80,9 @@
             ${{ $producto->precio }}
         </div>
 
-        <div class="acciones">
+    <p>Creado por: {{ $producto->user->name ?? 'Sin usuario' }}</p>
 
+        <div class="acciones">
             <a href="/productos/{{ $producto->id }}/edit">
                 <button class="btn btn-editar">Editar</button>
             </a>

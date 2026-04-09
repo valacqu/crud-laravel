@@ -67,10 +67,25 @@
         ➕ Crear producto
     </a>
 
+    <!-- BUSCADOR -->
+    <form method="GET" action="{{ route('productos.index') }}" style="margin: 20px 0;">
+        <input 
+            type="text" 
+            name="buscar" 
+            placeholder="Buscar producto"
+            value="{{ request('buscar') }}"
+        >
+        <button type="submit">Buscar</button>
+    </form>
+
+    
     @foreach($productos as $producto)
         <div class="producto">
+            
             <div class="info">
-                {{ $producto->nombre }} - ${{ $producto->precio }}
+                <h3>{{ $producto->nombre }}</h3>
+                <p>${{ $producto->precio }}</p>
+                <p>Creado por: {{ $producto->user->name ?? 'Sin usuario' }}</p>
             </div>
 
             <div class="acciones">
@@ -84,6 +99,7 @@
                     <button type="submit" class="eliminar">Eliminar</button>
                 </form>
             </div>
+
         </div>
     @endforeach
 </div>

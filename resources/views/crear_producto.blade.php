@@ -60,11 +60,10 @@
 <form method="POST" action="{{ route('productos.store') }}">
     @csrf
 
-    <input type="text" name="nombre" placeholder="Nombre del producto" required>
+    <input type="text" name="nombre" placeholder="Nombre" required>
+    <input type="number" name="precio" placeholder="Precio" required>
 
-    <input type="number" name="precio" placeholder="Precio" step="0.01" required>
-
-    <button type="submit">Guardar Producto</button>
+    <button type="submit">Guardar</button>
 </form>
 
 <div class="back">
