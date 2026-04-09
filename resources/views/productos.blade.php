@@ -1,70 +1,89 @@
  <style>
- 
- .form-container {
-        background: #ffffff;
-        padding: 30px;
-        border-radius: 10px;
-        width: 320px;
-        box-shadow: 0 0 12px rgba(0,0,0,0.1);
+    body {
+        font-family: Arial, sans-serif;
+        background: #f5f6fa;
+        padding: 20px;
     }
 
-    h2 {
+    h1 {
         text-align: center;
         margin-bottom: 20px;
     }
 
-    input {
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 15px;
-        border: 1px solid #ccc;
-        border-radius: 6px;
+    .container {
+        max-width: 700px;
+        margin: auto;
     }
 
-    input:focus {
-        border-color: #277642;
-        outline: none;
-    }
-
-    button {
-        width: 100%;
-        padding: 10px;
-        background: #3b9d3b;
-        border: none;
+    .btn-crear {
+        display: inline-block;
+        margin-bottom: 20px;
+        padding: 10px 15px;
+        background: #28a745;
         color: white;
-        border-radius: 6px;
-        cursor: pointer;
-        font-size: 15px;
-    }
-
-    button:hover {
-        background: #20b459;
-    }
-
-    .back {
-        margin-top: 10px;
-        text-align: center;
-    }
-
-    .back a {
         text-decoration: none;
-        color: #0d58a2;
+        border-radius: 5px;
     }
 
-    .back a:hover {
-        text-decoration: underline;
+    .producto {
+        background: white;
+        padding: 15px;
+        margin-bottom: 15px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .info {
+        font-size: 16px;
+    }
+
+    .acciones a {
+        margin-right: 10px;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .editar {
+        color: blue;
+    }
+
+    .eliminar {
+        background: red;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 5px;
+        cursor: pointer;
     }
 </style>
-<form method="POST" action="/productos">
-    @csrf
 
-    <input type="text" name="nombre" placeholder="Nombre del producto" required>
+<div class="container">
+    <h1>Productos</h1>
 
-    <input type="number" name="precio" placeholder="Precio" step="0.01" required>
+    <a href="{{ route('productos.create') }}" class="btn-crear">
+        ➕ Crear producto
+    </a>
 
-    <button type="submit">Guardar Producto</button>
-</form>
+    @foreach($productos as $producto)
+        <div class="producto">
+            <div class="info">
+                {{ $producto->nombre }} - ${{ $producto->precio }}
+            </div>
 
-<div class="back">
-    <a href="/productos">← Volver a la lista</a>
+            <div class="acciones">
+                <a href="{{ route('productos.edit', $producto->id) }}" class="editar">
+                    Editar
+                </a>
+
+                <form action="{{ route('productos.destroy', $producto->id) }}" method="POST" style="display:inline;">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="eliminar">Eliminar</button>
+                </form>
+            </div>
+        </div>
+    @endforeach
 </div>

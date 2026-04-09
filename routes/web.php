@@ -1,14 +1,24 @@
+
 <?php
+
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ProductoController;
 
-Route::get('/productos', [ProductoController::class, 'index'])->name('productos.index');
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+*/
 
-Route::get('/formulario', [ProductoController::class, 'create'])->name('productos.create');
+Auth::routes();
 
-Route::post('/productos', [ProductoController::class, 'store'])->name('productos.store');
+// Redirigir raíz al login (opcional)
+Route::get('/', function () {
+    return redirect('/login');
+});
 
-Route::get('/productos/{id}/edit', [ProductoController::class, 'edit'])->name('productos.edit');
-
-Route::put('/productos/{id}', [ProductoController::class, 'update'])->name('productos.update');
-
-Route::delete('/productos/{id}', [ProductoController::class, 'destroy'])->name('productos.destroy');
+// Rutas protegidas (requieren login)
+Route::middleware('auth')->group(function () {
+    Route::resource('productos', ProductoController::class);
+});
